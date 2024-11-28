@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <head><h1>Weather App</h1></head>
+    <p>Enter your location to escape the rain!</p>
+    <main>
+        <form>
+            <label for="location">Location</label>
+            <input type="text" id="location">
+            <br><br>
+
+            <label for="radius">Radius (Miles)</label>
+            <input type="text" id="radius">
+            
+            <input type="submit" value="Submit">
+           
+
+        </form>
+
+        <h2>Search results:</h2>
+        <p>Select the correct location:</p>
+        <ul id="results"></ul>
+        <div id="selected-location"></div>
+        <div id="current-weather"></div>        
+        <div id="forecast"></div>
+
+
+    
+
+    </main>
+
+    <script src="script.js"></script>
+
+  
+</body>
+</html>
