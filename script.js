@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("form");
 
     const cities = [];
+    const cityWeatherData = [];
 
 
     form.addEventListener("submit", (event) => {
@@ -80,7 +81,16 @@ document.addEventListener("DOMContentLoaded", () => {
     //  calculates a radius based on longitude and latitude 
 
     const calculateBoundingBox = (lat, lon, radiusInMiles) => {
-        const radiusInKm = radiusInMiles * 1.60934; // Convert miles to kilometres
+
+        const maxRadius = 100;
+        const validRadius = Math.min(Math.max(1, radiusInMiles), maxRadius);
+
+        if (validRadius !== radiusInMiles) {
+            console.log(`Radius adjusted to ${validRadius} miles (max: ${maxRadius})`);
+        }
+    
+
+        const radiusInKm = validRadius * 1.60934; // Convert miles to kilometres
         const earthRadiusKm = 111; // Approx. km per degree latitude
     
         const latDelta = parseFloat((radiusInKm / earthRadiusKm).toFixed(6));
@@ -152,39 +162,132 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             console.log("cities saved", cities);
+            fetchNearbyWeatherData()
         })
         .catch(error => console.error("Error fetching nearby locations", error));
     }
 
 
-    //  not finished need to loop through city data 
+
+    const fetchNearbyWeatherData = async () => {
+        const weatherPromises = cities.map(city => fetchWeatherForCity(city.lat, city.lon));
     
-    // const fetchNearbyWeatherData = (cities) => {
-    //     const apiKey = "19f5f2f5134ce3e9bd5ec5dcfeb8ffeb";
-    //     const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
+        try {
+            const weatherData = await Promise.all(weatherPromises);
+    
+            const enrichedCityData = cities.map((city, index) => ({
+                ...city,
+                weather: weatherData[index], // Combine city with weather
+            }));
+    
+            console.log("Enriched City Weather Data:", enrichedCityData);
+    
+            // Display the data
+            // displayNearbyWeather(enrichedCityData);
+
+            const categorisedCities = categoriseCities(enrichedCityData);
+            displayCategorisedCities(categorisedCities);
+
+
+
+    
+        } catch (error) {
+            console.error("Error fetching weather data for nearby cities:", error);
+        }
+    };
+    
     
 
 
-    //     fetch(apiUrl)
-    //         .then(response => response.json())
-    //         .then(data => {
+    const fetchWeatherForCity = async (lat, lon) => {
+        const apiKey = "19f5f2f5134ce3e9bd5ec5dcfeb8ffeb";
+        const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`;
     
-    //             // Show current weather (optional)
-    //             const currentWeather = data.list[0];
-    //             const currentTemp = currentWeather.main.temp;
-    //             const currentDescription = currentWeather.weather[0].description;
-    //             const currentIcon = currentWeather.weather[0].icon;
+        try {
+            const response = await fetch(apiUrl);
+            const data = await response.json();
     
-    //             const currentWeatherDiv = document.getElementById("current-weather");
-    //             currentWeatherDiv.innerHTML = `
-    //                 <h3>Current Weather</h3>
-    //                 <p><strong>Temperature:</strong> ${currentTemp}°C</p>
-    //                 <p><strong>Description:</strong> ${currentDescription}</p>
-    //                 <img src="https://openweathermap.org/img/wn/${currentIcon}@2x.png" alt="${currentDescription}">
-    //             `;
-    //         })
-    //         .catch(error => console.error("Error fetching weather data:", error));
-    // };
+            // Use the first entry from the forecast list
+            const currentWeather = data.list[0];
+            return {
+                temp: currentWeather.main.temp,
+                description: currentWeather.weather[0].description,
+                icon: currentWeather.weather[0].icon,
+            };
+        } catch (error) {
+            console.error("Error fetching weather data:", error);
+            return null;
+        }
+    };
+    
+    
+
+    const categoriseCities = (cities) => {
+        // Add a null check to prevent errors
+        const shitCities = cities.filter(city => 
+            city.weather && 
+            city.weather.description && 
+            city.weather.description.toLowerCase().includes("rain")
+        );
+        
+        const notShitCities = cities.filter(city => 
+            city.weather && 
+            city.weather.description && 
+            !city.weather.description.toLowerCase().includes("rain")
+        );
+    
+        return { shitCities, notShitCities };
+        // Return an object with both arrays
+    }
+
+    const displayCategorisedCities = (categorisedCities) => {
+
+        const { shitCities, notShitCities} = categorisedCities; 
+
+        const resultsDiv = document.getElementById("results");
+        resultsDiv.innerHTML = ""; // clear previous results
+
+        //  create columns
+
+        const shitColumn = document.createElement("div");
+        shitColumn.innerHTML = "<h3>Shit Cities (Rain)</h3>";
+
+        const notShitColumn = document.createElement("div");
+        notShitColumn.innerHTML = "<h3>Not Shit Cities (No Rain)</h3>";
+
+        // populate shit cities
+
+        shitCities.forEach(city => {
+            const cityDiv = document.createElement("div");
+            cityDiv.innerHTML = `
+            <p>${city.name}</p>
+            <p>${city.weather.temp}</p>
+            <p>${city.weather.description}</p>
+            <img src="https://openweathermap.org/img/wn/${city.weather.icon}@2x.png" alt="${city.weather.description}">`;
+
+            shitColumn.appendChild(cityDiv);
+        });
+
+        notShitCities.forEach(city => {
+            const cityDiv = document.createElement("div");
+            cityDiv.innerHTML = `
+            <p>${city.name}</p>
+            <p>${city.weather.temp}</p>
+            <p>${city.weather.description}</p>
+            <img src="https://openweathermap.org/img/wn/${city.weather.icon}@2x.png" alt="${city.weather.description}">`;
+
+            notShitColumn.appendChild(cityDiv);
+        });
+
+        // add columns to results
+
+        resultsDiv.appendChild(shitColumn);
+        resultsDiv.appendChild(notShitColumn);
+
+        
+    }
+    
+    
     
     
 
