@@ -1,9 +1,12 @@
 {
+  "homepage": "https://gthmpsn23.github.io/weather_app",
   "name": "frontend",
   "version": "1.0.0",
   "main": "script.js",
   "scripts": {
-    "build": "tailwindcss -i ./input.css -o ./styles.css --watch"
+    "build": "tailwindcss -i ./input.css -o ./styles.css --watch",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d ."
   },
   "keywords": [],
   "author": "",
@@ -11,6 +14,7 @@
   "description": "",
   "devDependencies": {
     "autoprefixer": "^10.4.20",
+    "gh-pages": "^6.2.0",
     "postcss": "^8.4.49",
     "tailwindcss": "^3.4.15"
   }
