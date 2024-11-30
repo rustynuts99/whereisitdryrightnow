@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
 
     const fetchWeatherData = (lat, lon, locationName) => {
-        fetch(`http://localhost:3001/weather?lat=${lat}&lon=${lon}`)
+        fetch(`https://weather-app-k2qd.onrender.com/weather?lat=${lat}&lon=${lon}`)
             .then(response => response.json())
             .then(data => {
                 // Show current weather (optional)
@@ -119,8 +119,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 
     
                 const currentWeatherDiv = document.getElementById("current-weather");
+                console.log('Current weather div:', currentWeatherDiv);  // Debug log
+
                 currentWeatherDiv.innerHTML = `
-                    <div class="bg-orange-200 shadow-md rounded-lg p-4 mb-4 border-2 border-black-200">
+                    <div class="bg-orange-200 shadow-md rounded-lg p-4 mb-4 border-4 border-black-800">
                     <h3 class="text-xl font-bold mb-4 text-center">Current Weather in ${locationName}</h3>
                         <div class="text-center">
                             <p class="mb-2"><span class="font-semibold">Temperature:</span> ${currentTemp}°C</p>
@@ -194,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const fetchWeatherForCity = async (lat, lon) => {
         try {
-            const response = await fetch(`http://localhost:3001/weather?lat=${lat}&lon=${lon}`);
+            const response = await fetch(`https://weather-app-k2qd.onrender.com/weather?lat=${lat}&lon=${lon}`);
             const data = await response.json();
     
             // Use the first entry from the forecast list
@@ -240,7 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Only show flex layout if both columns have content
 
         // Adjust layout based on which columns have content
-        resultsDiv.className = (shitCities.length > 0 && notShitCities.length > 0) ? 
+        const categoriesContainer = document.createElement('div');
+        categoriesContainer.className = (shitCities.length > 0 && notShitCities.length > 0) ? 
         "flex gap-8 justify-center max-w-4xl mx-auto" : 
         "max-w-2xl mx-auto";
 
@@ -273,6 +276,13 @@ document.addEventListener("DOMContentLoaded", () => {
         <p class='text-center text-gray-600 italic mb-4'>Great News! No rainy cities found!</p>`;
         resultsDiv.appendChild(notShitColumn);
         }
+
+        // sort shitCities by temperature in descending order
+        shitCities.sort((a,b) => b.weather.temp - a.weather.temp);
+
+        // sort notshitcities by temp in descending order
+
+        notShitCities.sort((a,b) => b.weather.temp - a.weather.temp);
 
         // populate shit cities
 
@@ -310,8 +320,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // add columns to results
 
-        resultsDiv.appendChild(shitColumn);
-        resultsDiv.appendChild(notShitColumn);
+        categoriesContainer.appendChild(shitColumn);
+        categoriesContainer.appendChild(notShitColumn);
+
+        // resultsDiv.appendChild(shitColumn);
+        // resultsDiv.appendChild(notShitColumn);
+        resultsDiv.appendChild(categoriesContainer);
+
 
         
     }
