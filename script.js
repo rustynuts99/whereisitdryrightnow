@@ -323,9 +323,8 @@ document.addEventListener("DOMContentLoaded", () => {
         categoriesContainer.appendChild(shitColumn);
         categoriesContainer.appendChild(notShitColumn);
 
-        // resultsDiv.appendChild(shitColumn);
-        // resultsDiv.appendChild(notShitColumn);
         resultsDiv.appendChild(categoriesContainer);
+
 
 
         
