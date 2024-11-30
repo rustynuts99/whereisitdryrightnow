@@ -1,7 +1,6 @@
 console.log('Starting server...');
 
 const express = require('express');
-const cors = require('cors');
 const dotenv = require('dotenv');
 const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 
@@ -9,10 +8,16 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 dotenv.config();
 
 const app = express();
-const port = 3001;
+const port = process.env.POR || 3002;
 
 // Middleware
-app.use(cors());
+// In your server.js, update the CORS configuration
+const cors = require('cors');
+app.use(cors({
+    origin: ['http://127.0.0.1:3000', 'http://localhost:3000'],
+    methods: ['GET', 'POST'],
+    credentials: true
+}));
 app.use(express.json());
 
 // Test route to make sure server is working
