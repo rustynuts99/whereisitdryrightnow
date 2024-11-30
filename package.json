@@ -1,0 +1,14 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "homepage": "https://gthmpsn23.github.io/weather_app",
+  "scripts": {
+    "build": "npm install tailwindcss && npx tailwindcss -i ./input.css -o ./styles.css",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d ."
+  },
+  "devDependencies": {
+    "gh-pages": "^6.2.0",
+    "tailwindcss": "^3.4.15"
+  }
+}

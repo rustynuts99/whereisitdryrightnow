@@ -8,13 +8,13 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 dotenv.config();
 
 const app = express();
-const port = process.env.POR || 3002;
+const port = process.env.PORT || 3002;
 
 // Middleware
 // In your server.js, update the CORS configuration
 const cors = require('cors');
 app.use(cors({
-    origin: ['http://127.0.0.1:3000', 'http://localhost:3000'],
+    origin: '*',  // Be more restrictive in production
     methods: ['GET', 'POST'],
     credentials: true
 }));
@@ -42,5 +42,5 @@ app.get('/weather', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running on http://localhost:${port}`);
+    console.log(`Server running on port ${port}`);
 });
