@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
     
-    
+    // fetches weather for city
 
     const fetchWeatherForCity = async (lat, lon) => {
         try {
@@ -325,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         resultsDiv.appendChild(categoriesContainer);
 
-
+    
 
         
     }
