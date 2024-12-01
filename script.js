@@ -6,11 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // reset cities
+
     const resetButton = document.getElementById('resetButton');
     if (resetButton) {
         resetButton.addEventListener("click", () => {
             console.log("Reset clicked");
             cities.length = 0;
+            console.log("Cities array now:", cities);
             document.getElementById("current-weather").innerHTML = "";
             document.getElementById("results").innerHTML = "";
             form.reset();
@@ -28,6 +30,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const location = document.getElementById("location").value;
         const radius = document.getElementById("radius").value;
 
+        // error handling for radius
+        if(radius.value < 0){
+            const resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = `
+                <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4  mb-4" role="alert">
+                    <p>Please enter a postive radius value.</p>
+                </div>
+            `;
+            return; // stop execution if radius is negative
+
+        }
+
         console.log("location", location);
 
         console.log("radius", radius);
@@ -43,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("No results found for the given location.");
                 return;
             }
+            
 
             const resultsDiv = document.getElementById("results");
             resultsDiv.innerHTML = "";
