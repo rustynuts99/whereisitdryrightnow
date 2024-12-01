@@ -7,19 +7,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // reset cities
     const resetButton = document.getElementById('resetButton');
-    console.log("Reset button found:", resetButton); // Add this line
-    resetButton.addEventListener("click", () => {
-        console.log("Reset button clicked");
-        // clesar cities
-        cities.length = 0;
-        console.log("Cities array cleared:", cities);
-        document.getElementById("current-weather").innerHTML = "";
-        document.getElementById("results").innerHTML = "";
-
-        form.reset();
-
-
-    });
+    if (resetButton) {
+        resetButton.addEventListener("click", () => {
+            console.log("Reset clicked");
+            cities.length = 0;
+            document.getElementById("current-weather").innerHTML = "";
+            document.getElementById("results").innerHTML = "";
+            form.reset();
+        });
+    } else {
+        console.log("Reset button not found");
+    }
 
 
     form.addEventListener("submit", (event) => {
