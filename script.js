@@ -5,6 +5,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const cityWeatherData = [];
 
 
+    // reset cities
+    const resetButton = document.getElementById('resetButton');
+    resetButton.addEventListener("click", () => {
+    
+        // clesar cities
+        cities.length = 0;
+
+        document.getElementById("current-weather").innerHTML = "";
+        document.getElementById("results").innerHTML = "";
+
+        form.reset();
+
+
+    })
+
+
     form.addEventListener("submit", (event) => {
         event.preventDefault(); // prevent the form from refreshing the page
 
@@ -166,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     const fetchNearbyWeatherData = async () => {
-        const weatherPromises = cities.map(city => fetchWeatherForCity(city.lat, city.lon));
+    const weatherPromises = cities.map(city => fetchWeatherForCity(city.lat, city.lon));
     
         try {
             const weatherData = await Promise.all(weatherPromises);
