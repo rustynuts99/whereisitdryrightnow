@@ -15,7 +15,12 @@ const port = process.env.PORT || 3002;
 const cors = require('cors');
 // In your server.js, update the CORS configuration
 app.use(cors({
-    origin: ['http://127.0.0.1:3000', 'http://localhost:3000', 'https://whereisitdryrightnow.com'],
+    origin: [
+        'http://127.0.0.1:3000', 
+        'http://localhost:3000', 
+        'https://whereisitdryrightnow.com',
+        'https://www.whereisitdryrightnow.com'
+    ],
     methods: ['GET', 'POST'],
     credentials: true
 }));
