@@ -285,8 +285,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // Both columns
 
         shitColumn.className = notShitColumn.className = "w-96 min-h-[200px] p-4";
-        shitColumn.innerHTML = "<h3 class='text-xl font-bold mb-4 text-center'>Shit Cities (Rain)</h3>";
-        notShitColumn.innerHTML = "<h3 class='text-xl font-bold mb-4 text-center'>Not Shit Cities (No Rain)</h3>";
+        shitColumn.innerHTML = "<h3 class='text-xl font-bold mb-4 text-center'>👎 Rain</h3>";
+        notShitColumn.innerHTML = "<h3 class='text-xl font-bold mb-4 text-center'>👍 No Rain</h3>";
         resultsDiv.appendChild(shitColumn);
         resultsDiv.appendChild(notShitColumn);
         } else if (shitCities.length > 0) {
@@ -294,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Only rainy cities
 
         shitColumn.className = "w-full min-h-[200px] p-4";
-        shitColumn.innerHTML = `<h3 class='text-xl font-bold mb-4 text-center'>Shit Cities (Rain)</h3>
+        shitColumn.innerHTML = `<h3 class='text-xl font-bold mb-4 text-center'>👎 Rain</h3>
         <p class='text-center text-gray-600 italic mb-4'>Bad luck! Only rainy cities found!</p>`;
         resultsDiv.appendChild(shitColumn);
         } else {
@@ -302,7 +302,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Only non-rainy cities
 
         notShitColumn.className = "w-full min-h-[200px] p-4";
-        notShitColumn.innerHTML = `<h3 class='text-xl font-bold mb-4 text-center'>Not Shit Cities (No Rain)</h3>
+        notShitColumn.innerHTML = `<h3 class='text-xl font-bold mb-4 text-center'>👍 No Rain</h3>
         <p class='text-center text-gray-600 italic mb-4'>Great News! No rainy cities found!</p>`;
         resultsDiv.appendChild(notShitColumn);
         }
