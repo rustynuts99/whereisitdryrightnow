@@ -13,8 +13,9 @@ const port = process.env.PORT || 3002;
 // Middleware
 // In your server.js, update the CORS configuration
 const cors = require('cors');
+// In your server.js, update the CORS configuration
 app.use(cors({
-    origin: '*',  // Be more restrictive in production
+    origin: ['http://127.0.0.1:3000', 'http://localhost:3000', 'https://gthmpsn23.github.io'],
     methods: ['GET', 'POST'],
     credentials: true
 }));
