@@ -15,10 +15,11 @@ const port = process.env.PORT || 3002;
 const cors = require('cors');
 // In your server.js, update the CORS configuration
 app.use(cors({
-    origin: ['http://127.0.0.1:3000', 'http://localhost:3000', 'https://gthmpsn23.github.io'],
+    origin: ['http://127.0.0.1:3000', 'http://localhost:3000', 'https://whereisitdryrightnow.com'],
     methods: ['GET', 'POST'],
     credentials: true
 }));
+
 app.use(express.json());
 
 // Test route to make sure server is working
