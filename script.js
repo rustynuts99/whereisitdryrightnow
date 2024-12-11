@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // call bounding box function and pass user input as an arguement
 
                     const boundingBox = calculateBoundingBox(result.lat, result.lon, radius); 
-                    fetchNearbyLocations(boundingBox);
+                    fetchNearbyLocations(boundingBox, result.display_name);
                     
                 });
                 resultsDiv.appendChild(listItem);
