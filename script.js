@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cities = [];
     const cityWeatherData = [];
+    const userCount = [];
 
 
     // reset cities
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log("Reset button not found");
     }
 
-
+    
     form.addEventListener("submit", (event) => {
         event.preventDefault(); // prevent the form from refreshing the page
 
@@ -41,10 +42,8 @@ document.addEventListener("DOMContentLoaded", () => {
             return; // stop execution if radius is negative
 
         }
-
-        console.log("location", location);
-
-        console.log("radius", radius);
+        else{userCount += 1}
+        console.log(userCount)
 
         // fetchCoordinates(location);
 
@@ -58,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             
-
+            
             const resultsDiv = document.getElementById("results");
             resultsDiv.innerHTML = "";
 
@@ -86,13 +85,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 listItem.dataset.lon = result.lon;
                 listItem.addEventListener("click", () =>{
 
+                    
                     // Call fetchWeatherData with selected lat and lon
                     fetchWeatherData(result.lat, result.lon, result.display_name);
 
                     // call bounding box function and pass user input as an arguement
 
                     const boundingBox = calculateBoundingBox(result.lat, result.lon, radius); 
-                    fetchNearbyLocations(boundingBox);
+                    fetchNearbyLocations(boundingBox, locationName);
                     
                 });
                 resultsDiv.appendChild(listItem);
@@ -169,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // uses radius (boundingBox) to search for nearby locations
 
-    const fetchNearbyLocations = (boundingBox, ) => {
+    const fetchNearbyLocations = (boundingBox,locationName) => {
         const {minLon, maxLat, maxLon, minLat} = boundingBox;
 
         const apiUrl = `https://nominatim.openstreetmap.org/search?q=city&format=json&bounded=1&viewbox=${minLon},${maxLat},${maxLon},${minLat}&extratags=1&addressdetails=1&limit=50`;// best so far
