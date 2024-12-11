@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     // call bounding box function and pass user input as an arguement
 
                     const boundingBox = calculateBoundingBox(result.lat, result.lon, radius); 
-                    fetchNearbyLocations(boundingBox, locationName);
+                    fetchNearbyLocations(boundingBox);
                     
                 });
                 resultsDiv.appendChild(listItem);
@@ -165,24 +165,32 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // uses radius (boundingBox) to search for nearby locations
 
-    const fetchNearbyLocations = (boundingBox,locationName) => {
+    const fetchNearbyLocations = (boundingBox, locationName) => {
         const {minLon, maxLat, maxLon, minLat} = boundingBox;
-
-        const apiUrl = `https://nominatim.openstreetmap.org/search?q=city&format=json&bounded=1&viewbox=${minLon},${maxLat},${maxLon},${minLat}&extratags=1&addressdetails=1&limit=50`;// best so far
-
+        const currentLat = parseFloat((maxLat + minLat) / 2);  // Get center point
+        const currentLon = parseFloat((maxLon + minLon) / 2);
+    
+        const apiUrl = `https://nominatim.openstreetmap.org/search?q=city&format=json&bounded=1&viewbox=${minLon},${maxLat},${maxLon},${minLat}&extratags=1&addressdetails=1&limit=50`;
+    
         fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
             console.log("Nearby locations:", data);
+            cities.length = 0;  // Clear existing cities
             data.forEach(city => {
-                cities.push({
-                    name: city.display_name,
-                    lat: parseFloat(city.lat),
-                    lon: parseFloat(city.lon),
-                });
-               
+                // Use a small threshold (0.01 degrees is roughly 1km)
+                const latDiff = Math.abs(parseFloat(city.lat) - currentLat);
+                const lonDiff = Math.abs(parseFloat(city.lon) - currentLon);
+                
+                if (latDiff > 0.01 || lonDiff > 0.01) {
+                    cities.push({
+                        name: city.display_name,
+                        lat: parseFloat(city.lat),
+                        lon: parseFloat(city.lon),
+                    });
+                }
             });
-
+    
             console.log("cities saved", cities);
             fetchNearbyWeatherData()
         })
