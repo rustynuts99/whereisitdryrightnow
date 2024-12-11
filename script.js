@@ -3,8 +3,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const cities = [];
     const cityWeatherData = [];
-    const userCount = [];
-
 
     // reset cities
 
@@ -32,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const radius = document.getElementById("radius").value;
 
         // error handling for radius
-        if(radius.value < 0){
+        if(parseInt(radius) < 0){
             const resultsDiv = document.getElementById("results");
             resultsDiv.innerHTML = `
                 <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4  mb-4" role="alert">
@@ -42,8 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return; // stop execution if radius is negative
 
         }
-        else{userCount += 1}
-        console.log(userCount)
 
         // fetchCoordinates(location);
 
