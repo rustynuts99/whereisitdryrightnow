@@ -1,0 +1,74 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Where Is It Dry Right Now</title>
+    <link href="styles.css" rel="stylesheet">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HFY9N30ZZ5"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-HFY9N30ZZ5');
+    </script>
+</head>
+<body>
+    <header class="text-center py-8 bg-white">
+        <h1 class="text-4xl font-bold text-black mb-2">Where Is It Dry Right Now</h1>
+        <p class="text-lg text-orange-500">Enter your location to escape the rain!</p>
+    </header>
+
+
+    <!-- How It Works (for clarity and engagement)
+"How Does It Work?"
+1. Enter Your Current Location: Let us know where you are.
+2. Explore Nearby Cities: See which spots have rain or shine.
+3. Plan Your Day Better: Choose a “not-sh*t” spot for your outing!
+
+ -->
+ 
+    <main class="container mx-auto px-4 max-w-2xl space-y-8">
+        <div class="flex flex-col space-y-4 mb-8">
+            <h2 class="text-center text-2xl font-bold text-black mb-2">How Does It Work?</h2>
+            <ol class="">
+                <li><strong>1. Enter Your Current Location: </strong>Let us know where you are.</li>
+                <li><strong>2. Explore Nearby Cities: </strong>See which spots have rain or shine.</li>
+                <li><strong>3. Plan Your Day Better: </strong>Choose a rain free 🌧️ spot for your day out!</li>
+            </ol>
+        </div>
+        <form class="flex flex-col space-y-4">
+            <div class="flex flex-col">
+                <label for="location" class="font-bold mb-2">Location</label>
+                <input type="text" id="location" class="border rounded p-2">
+            </div>
+
+            <div class="flex flex-col">
+                <label for="radius" class="font-bold mb-2">Radius (Miles)</label>
+                <input type="text" id="radius" class="border rounded p-2">
+            </div>
+                <input class="bg-orange-500 text-white border rounded p-2 hover:bg-orange-600" type="submit" value="Submit">
+                <input class="bg-white text-orange-500 border rounded p-2 hover:bg-black-600" type="button" id="resetButton" value="Reset">
+        </form>
+
+        <div id="current-weather"></div>        
+        <div id="forecast"></div>
+        <div id="results"></div>
+    </main>
+
+    <footer class="bg-white py-6 mt-8 border-t">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-600">whereisitdryrightnow.com - All rights reserved</p>
+            <div class="mt-2 space-x-4">
+                <a href="/privacy" class="text-orange-500 hover:text-orange-600">Privacy Policy</a>
+                <span class="text-gray-400">|</span>
+                <small class="text-gray-400">Inspired by whattimeisitrightnow.com</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
